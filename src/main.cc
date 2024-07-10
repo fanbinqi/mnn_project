@@ -31,8 +31,6 @@ std::vector<BoxInfo> decode(cv::Mat &image, std::shared_ptr<MNN::Interpreter> &n
 
   net->runSession(session);
 
-  printf("-------%d \n", __LINE__);
-
   MNN::Tensor *tensor_scores = net->getSessionOutput(session, nullptr);
   MNN::Tensor tensor_scores_host(tensor_scores, tensor_scores->getDimensionType());
   tensor_scores->copyToHostTensor(&tensor_scores_host);
@@ -41,7 +39,6 @@ std::vector<BoxInfo> decode(cv::Mat &image, std::shared_ptr<MNN::Interpreter> &n
   const unsigned int num_proposals = pred_dims.at(1);
   const unsigned int num_classes = pred_dims.at(2) - 5;
   std::vector<BoxInfo> bbox_collection;
-  printf("-------%d \n", __LINE__);
 
   for (int i = 0; i < num_proposals; ++i) {
     const float *offset_obj_cls_ptr = tensor_scores_host.host<float>() + (i * (num_classes + 5));
@@ -87,7 +84,7 @@ std::vector<BoxInfo> decode(cv::Mat &image, std::shared_ptr<MNN::Interpreter> &n
 }
 
 int main(int argc, char **argv) {
-  std::string model_name = "/workspace/fanbinqi/models/yolov5n.mnn";
+  std::string model_name = "/workspace/user/fanbinqi/models/yolov5n.mnn";
   std::shared_ptr<MNN::Interpreter> net = std::shared_ptr<MNN::Interpreter>(MNN::Interpreter::createFromFile(model_name.c_str()));
   
   if (net == nullptr) return 0;
