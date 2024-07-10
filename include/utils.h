@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <MNN/MNNDefined.h>
+#include <MNN/MNNDefine.h>
 #include <MNN/MNNForwardType.h>
 #include <MNN/Interpreter.hpp>
 #include <MNN/ImageProcess.hpp>
